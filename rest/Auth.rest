@@ -1,0 +1,45 @@
+### 1. Registrar un usuario ADMIN
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "Admin Test",
+    "email": "adminn@hospital.edu",
+    "password": "admin12345",
+    "role": "ADMIN"
+}
+
+###
+
+### 2. Registrar un usuario normal
+POST http://localhost:8000/api/auth/register
+Content-Type: application/json
+
+{
+    "name": "User Test",
+    "email": "user@hospital.edu",
+    "password": "user12345",
+    "role": "USER"
+}
+
+###
+
+### 3. Login como ADMIN
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "adminn@hospital.edu",
+    "password": "admin12345"
+}
+
+###
+
+### 4. Login como USER
+POST http://localhost:8000/api/auth/login
+Content-Type: application/json
+
+{
+    "email": "user@hospital.edu",
+    "password": "user12345"
+}

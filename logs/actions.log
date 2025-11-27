@@ -1,0 +1,63 @@
+{"level":30,"time":1759935756347,"pid":28636,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759935756347,"pid":28636,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":50,"time":1759935756434,"pid":28636,"hostname":"Nicolas","msg":"Error connecting Prisma to the database","error":"Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.","stack":"PrismaClientInitializationError: Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.\n    at r (C:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\prisma\\generated\\prisma\\runtime\\library.js:115:2770)\n    at ServerBootstrap.dbConnection (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:45:13)\n    at Server.<anonymous> (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:39:13)"}
+{"level":30,"time":1759935862165,"pid":7160,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759935862165,"pid":7160,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":50,"time":1759935862221,"pid":7160,"hostname":"Nicolas","msg":"Error connecting Prisma to the database","error":"Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.","stack":"PrismaClientInitializationError: Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.\n    at r (C:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\prisma\\generated\\prisma\\runtime\\library.js:115:2770)\n    at ServerBootstrap.dbConnection (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:45:13)\n    at Server.<anonymous> (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:39:13)"}
+{"level":30,"time":1759936022236,"pid":17116,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936022236,"pid":17116,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":50,"time":1759936022293,"pid":17116,"hostname":"Nicolas","msg":"Error connecting Prisma to the database","error":"Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.","stack":"PrismaClientInitializationError: Authentication failed against database server, the provided database credentials for `postgres` are not valid.\n\nPlease make sure to provide valid database credentials for the database server at the configured address.\n    at r (C:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\prisma\\generated\\prisma\\runtime\\library.js:115:2770)\n    at ServerBootstrap.dbConnection (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:45:13)\n    at Server.<anonymous> (c:\\Users\\nicos\\OneDrive\\Escritorio\\JS Y TS\\TS-Workshop2\\src\\config\\ServerBootstrap.ts:39:13)"}
+{"level":30,"time":1759936088423,"pid":15644,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936088423,"pid":15644,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759936088462,"pid":15644,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759936106771,"pid":23056,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936106772,"pid":23056,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759936106797,"pid":23056,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759936123645,"pid":27636,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936123645,"pid":27636,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759936123669,"pid":27636,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759936501951,"pid":20004,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936501952,"pid":20004,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759936501979,"pid":20004,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759936576538,"pid":26760,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759936576538,"pid":26760,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759936576564,"pid":26760,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759937001747,"pid":14288,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759937001747,"pid":14288,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759937001780,"pid":14288,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759937060406,"pid":30516,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759937060407,"pid":30516,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759937060444,"pid":30516,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759937121009,"pid":11748,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759937121010,"pid":11748,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759937121038,"pid":11748,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1759937304297,"pid":20116,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1759937304298,"pid":20116,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1759937304323,"pid":20116,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763666425189,"pid":38828,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763666425191,"pid":38828,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763666425305,"pid":38828,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667373453,"pid":38828,"hostname":"Nicolas","event":{"type":"ticket.created","occurredAt":"2025-11-20T14:36:13.209Z","payload":{"id":"9e681dc6-67cf-4ce4-98f2-df61bc6ffdc9","title":"Impresora no funciona en urgencias","userId":"d1737ea0-61ba-4e88-b948-8dc831d78f41","areaId":"f2956ef9-c326-4d83-b722-85f228400570"}},"msg":"Domain event: ticket.created"}
+{"level":30,"time":1763667435976,"pid":38828,"hostname":"Nicolas","event":{"type":"ticket.created","occurredAt":"2025-11-20T14:37:15.959Z","payload":{"id":"82b69eeb-8565-46d7-a316-443489232354","title":"Impresora no funciona en urgencias","userId":"d1737ea0-61ba-4e88-b948-8dc831d78f41","areaId":"f2956ef9-c326-4d83-b722-85f228400570"}},"msg":"Domain event: ticket.created"}
+{"level":30,"time":1763667652992,"pid":5896,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667652995,"pid":5896,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667653368,"pid":5896,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667664809,"pid":39432,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667664810,"pid":39432,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667664881,"pid":39432,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667681037,"pid":38196,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667681038,"pid":38196,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667681082,"pid":38196,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667697301,"pid":6236,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667697303,"pid":6236,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667697351,"pid":6236,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667704653,"pid":23628,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667704654,"pid":23628,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667704695,"pid":23628,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763667716225,"pid":22344,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763667716227,"pid":22344,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763667716270,"pid":22344,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763696762348,"pid":51500,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1763696762349,"pid":51500,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1763696762491,"pid":51500,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1763697110439,"pid":51500,"hostname":"Nicolas","event":{"type":"ticket.created","occurredAt":"2025-11-20T22:51:50.396Z","payload":{"id":"1dd2c6b3-62f9-49a3-97db-d629c7c3adcb","title":"Impresora no funciona en urgencias","userId":"7c483a4a-20e2-4cb3-8901-2ca59810f6cd","areaId":"f2956ef9-c326-4d83-b722-85f228400570"}},"msg":"Domain event: ticket.created"}

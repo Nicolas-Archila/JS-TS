@@ -1,0 +1,30 @@
+### IMPORTANTE: Primero haz login y copia el token aquí
+@token = v4.public.eyJzdWIiOiI3YzQ4M2E0YS0yMGUyLTRjYjMtODkwMS0yY2E1OTgxMGY2Y2QiLCJlbWFpbCI6ImFkbWlubkBob3NwaXRhbC5lZHUiLCJyb2xlIjoiQURNSU4iLCJpYXQiOiIyMDI1LTExLTIxVDAzOjUxOjEwLjcwOVoiLCJleHAiOiIyMDI1LTExLTIxVDA1OjUxOjEwLjcwOVoiLCJhdWQiOiJob3NwaXRhbC5kZXNrLmNsaWVudHMiLCJpc3MiOiJob3NwaXRhbC5kZXNrLmFwaSJ9wexrgmusqWPnNndNqcZtmZoNDgMMa_oQI6XesGLSSceOlmMQlq96Qs8V-C_USOOaUa6nxv_BTKcCdilIIdf6BQ
+@userId = 7c483a4a-20e2-4cb3-8901-2ca59810f6cd
+@areaId = f2956ef9-c326-4d83-b722-85f228400570
+
+###
+
+### 1. Crear un ticket (requiere auth)
+POST http://localhost:8000/api/tickets
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+    "title": "Impresora no funciona en urgencias",
+    "priority": "HIGH",
+    "userId": "{{userId}}",
+    "areaId": "{{areaId}}"
+}
+
+###
+
+### 2. Listar todos los tickets
+GET http://localhost:8000/api/tickets
+Authorization: Bearer {{token}}
+
+###
+
+### 3. Obtener un ticket específico
+GET http://localhost:8000/api/tickets/TICKET_ID_AQUI
+Authorization: Bearer {{token}}
