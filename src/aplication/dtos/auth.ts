@@ -6,7 +6,7 @@ export const ZRole = z.enum(RoleValues);
 export const RegisterSchema = z.object({
     name: z.string().trim().min(2),
     email: z.email(),
-    password: z.string().min(8),
+    password: z.string().min(4),
     role: ZRole.optional().default("USER"),
 });
 export type RegisterInput = z.infer<typeof RegisterSchema>;

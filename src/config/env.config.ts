@@ -1,5 +1,6 @@
 import { z } from "zod";
-
+import dotenv from "dotenv";
+dotenv.config();
 const envSchema = z.object({
     PORT: z.coerce.number().default(3333),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
@@ -12,7 +13,7 @@ const envSchema = z.object({
     DB_PORT: z.coerce.number().default(5432),
 
     PGADMIN_DEFAULT_EMAIL: z.string().email(),
-    PGADMIN_DEFAULT_PASSWORD: z.string().min(8),
+    PGADMIN_DEFAULT_PASSWORD: z.string().min(6),
 
     DATABASE_URL: z.string().url(),
 
