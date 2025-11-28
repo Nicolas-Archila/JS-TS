@@ -1,5 +1,4 @@
-import { User } from "../../domain/entitis/User";
-
+import { User } from "../../domain/entities/User"; // ✅ Corregido el path
 
 export const toHttp = (user: User): {
     id: string;

@@ -2,7 +2,7 @@ import { TicketRespository } from "../ports/TicketRepository";
 import { Clock } from '../ports/Clock';
 import { EventBus } from "../ports/EventBus";
 import { CreateTicketInput, CreateTicketSchema } from "../dtos/ticket";
-import { Ticket } from "../../domain/entitis/Ticket";
+import { Ticket } from "../../domain/entities/Ticket";
 
 export class CreateTicket {
     constructor(

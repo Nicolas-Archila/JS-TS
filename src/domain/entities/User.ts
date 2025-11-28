@@ -3,7 +3,7 @@ import { randomUUID } from "crypto";
 import { BaseEntity } from "./BaseEntity";
 import { RegisterInput } from "../../aplication/dtos/auth";
 import { Email } from "../values-objects/Email";
-import { DomainEevent } from "../events/DomainEvent";
+import { DomainEvent } from "../events/DomainEvent";
 import { RehydrateUserDto } from "../../aplication/dtos/user";
 
 type Role = "ADMIN" | "USER";
@@ -30,9 +30,9 @@ export class User extends BaseEntity {
             now
         );
 
-        const event: DomainEevent = {
+        const event: DomainEvent = {
             type: "user.created",
-            ocurredAt: now,
+            occurredAt: now,
             payload: {
                 id: user.id.toString(),
                 name: user.name,

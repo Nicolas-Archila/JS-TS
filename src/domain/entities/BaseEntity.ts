@@ -1,7 +1,7 @@
-import { DomainEevent } from '../events/DomainEvent';
+import { DomainEvent } from '../events/DomainEvent';
 
 export abstract class BaseEntity<IdType = string> {
-    public readonly _domainEvents: DomainEevent[] = [];
+    public readonly _domainEvents: DomainEvent[] = [];
     constructor(
         public readonly id: IdType,
         public readonly createdAt: Date = new Date(),
@@ -12,11 +12,11 @@ export abstract class BaseEntity<IdType = string> {
         return this.id === entity.id;
     }
 
-    protected recordEvent(event: DomainEevent): void {
+    protected recordEvent(event: DomainEvent): void {
         this._domainEvents.push(event);
     }
 
-    public pullDomainEvents(): DomainEevent[] {
+    public pullDomainEvents(): DomainEvent[] {
         const events = [...this._domainEvents];
         this._domainEvents.length = 0;
         return events;

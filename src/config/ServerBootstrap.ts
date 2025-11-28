@@ -1,7 +1,7 @@
 import { InMemoryEventBus } from './../infrastructure/events/InMemoryEventBus';
 import { LocalClock } from './../aplication/ports/Clock';
 import cors from "cors";
-import express, { Application, Router } from "express";
+import express, { Application, Router, Request, Response, NextFunction } from "express";
 import morgan from "morgan";
 import { PrismaTicketRepository } from "../infrastructure/repositories/PrismaTicketRepository";
 import { PrismaUserRepository } from "../infrastructure/repositories/PrismaUserRepository";
@@ -26,6 +26,9 @@ export class ServerBootstrap extends ConfigServer {
 
         this._app.use("/api", ...this._routers());
 
+        // ✅ Agregar manejo de errores global
+        this.configureErrorHandler();
+
         this.listen();
         this.handleShutdown();
     }
@@ -35,6 +38,27 @@ export class ServerBootstrap extends ConfigServer {
         this._app.use(express.urlencoded({ extended: true }));
         this._app.use(cors());
         this._app.use(morgan("dev"));
+    }
+
+    // ✅ NUEVO: Middleware de manejo de errores
+    private configureErrorHandler(): void {
+        this._app.use((err: any, req: Request, res: Response, next: NextFunction) => {
+            this._logger.error({
+                msg: "Error in request",
+                error: err.message,
+                stack: err.stack,
+                path: req.path,
+                method: req.method,
+            });
+
+            const statusCode = err.statusCode || 500;
+            const message = err.message || "Internal Server Error";
+
+            res.status(statusCode).json({
+                error: message,
+                ...(this.getEnviroment("NODE_ENV") === "development" && { stack: err.stack }),
+            });
+        });
     }
 
     public listen(): void {

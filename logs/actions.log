@@ -99,3 +99,6 @@
 {"level":30,"time":1764288966862,"pid":31896,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
 {"level":30,"time":1764288966862,"pid":31896,"hostname":"Nicolas","msg":"http://localhost:8000"}
 {"level":30,"time":1764288966882,"pid":31896,"hostname":"Nicolas","msg":"Prisma connected to the database"}
+{"level":30,"time":1764291144160,"pid":22948,"hostname":"Nicolas","msg":"Server listen on port: 8000 in development mode"}
+{"level":30,"time":1764291144160,"pid":22948,"hostname":"Nicolas","msg":"http://localhost:8000"}
+{"level":30,"time":1764291144183,"pid":22948,"hostname":"Nicolas","msg":"Prisma connected to the database"}

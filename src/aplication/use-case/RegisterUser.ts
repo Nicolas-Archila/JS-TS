@@ -1,5 +1,4 @@
-
-import { User } from "../../domain/entitis/User";
+import { User } from "../../domain/entities/User"; // ✅ Corregido el path
 import { Password } from "../../infrastructure/security/Password";
 import { RegisterInput, RegisterSchema } from "../dtos/auth";
 import { Clock } from "../ports/Clock";

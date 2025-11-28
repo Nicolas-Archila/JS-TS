@@ -1,6 +1,6 @@
 import { RehydrateUserDto } from "../../aplication/dtos/user";
 import { UserRepository } from "../../aplication/ports/UserRepository";
-import { User } from "../../domain/entitis/User";
+import { User } from "../../domain/entities/User"; // ✅ Corregido el path
 import { prismaClient } from "../db/prisma";
 
 export class PrismaUserRepository implements UserRepository {

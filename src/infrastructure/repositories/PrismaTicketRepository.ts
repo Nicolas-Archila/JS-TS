@@ -1,7 +1,7 @@
 import { TicketPriority, TicketStatus } from './../../domain/values-objects/Status';
 import { prismaClient } from "../db/prisma";
 import { TicketRespository } from '../../aplication/ports/TicketRepository';
-import { Ticket } from '../../domain/entitis/Ticket';
+import { Ticket } from '../../domain/entities/Ticket';
 
 export class PrismaTicketRepository implements TicketRespository {
     async save(ticket: Ticket): Promise<void> {
