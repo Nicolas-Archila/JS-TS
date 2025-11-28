@@ -8,7 +8,7 @@ export class Ticket extends BaseEntity<TicketId> {
     private constructor(
         id: TicketId,
         public title: string,
-        public status: TicketStatus,
+        public status: TicketStatus, // Ya está como public, perfecto
         public priority: TicketPriority,
         public readonly userId: string,
         public readonly areaId: string,

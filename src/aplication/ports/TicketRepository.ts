@@ -1,5 +1,5 @@
 import { User } from '../../../prisma/generated/prisma';
-import { Ticket } from '../../domain/entitis/Ticket';
+import { Ticket } from '../../domain/entities/Ticket';
 
 
 export interface TicketRespository {

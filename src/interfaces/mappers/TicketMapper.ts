@@ -1,4 +1,4 @@
-import { Ticket } from "../../domain/entitis/Ticket";
+import { Ticket } from "../../domain/entities/Ticket";
 
 export const toHttp = (ticket: Ticket):unknown => ({
     id: ticket.id.toString(),

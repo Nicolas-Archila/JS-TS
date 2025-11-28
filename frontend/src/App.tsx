@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { AlertCircle, CheckCircle2, Clock, XCircle, Plus, LogOut, Filter, Search, User, Activity } from 'lucide-react';
+import { AlertCircle, CheckCircle2, Clock, XCircle, Plus, LogOut, Search, User, Activity, Edit2 } from 'lucide-react';
 
 // ==================== TYPES ====================
 type TicketStatus = 'OPEN' | 'ASSIGNED' | 'IN_PROGRESS' | 'RESOLVED' | 'CLOSED' | 'CANCELLED';
@@ -81,7 +81,7 @@ class ApiService {
     return res.json();
   }
 
-  async createTicket(data: { title: string; priority: TicketPriority; userId: string; areaId: string }): Promise<Ticket> {
+  async createTicket(data: { title: string; priority: TicketPriority; areaId: string }): Promise<Ticket> {
     const res = await fetch(`${API_BASE}/tickets`, {
       method: 'POST',
       headers: this.getHeaders(),
@@ -89,6 +89,15 @@ class ApiService {
     });
     if (!res.ok) throw new Error('Failed to create ticket');
     return res.json();
+  }
+
+  async updateTicketStatus(ticketId: string, status: TicketStatus): Promise<void> {
+    const res = await fetch(`${API_BASE}/tickets/${ticketId}/state`, {
+      method: 'PATCH',
+      headers: this.getHeaders(),
+      body: JSON.stringify({ status }),
+    });
+    if (!res.ok) throw new Error('Failed to update ticket status');
   }
 }
 
@@ -207,7 +216,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               required
-              minLength={8}
+              minLength={4}
             />
           </div>
 
@@ -237,7 +246,7 @@ const LoginPage: React.FC<{ onLogin: () => void }> = ({ onLogin }) => {
 
         <div className="mt-6 p-4 bg-gray-50 rounded-lg text-xs text-gray-600">
           <p className="font-semibold mb-1">Credenciales de prueba:</p>
-          <p>Email: alice.admin@hospital.edu</p>
+          <p>Email: admin@hospital.edu</p>
           <p>Password: admin123</p>
         </div>
       </div>
@@ -250,6 +259,8 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
   const [tickets, setTickets] = useState<Ticket[]>([]);
   const [loading, setLoading] = useState(true);
   const [showCreateModal, setShowCreateModal] = useState(false);
+  const [showStatusModal, setShowStatusModal] = useState(false);
+  const [selectedTicket, setSelectedTicket] = useState<Ticket | null>(null);
   const [filterStatus, setFilterStatus] = useState<TicketStatus | 'ALL'>('ALL');
   const [filterPriority, setFilterPriority] = useState<TicketPriority | 'ALL'>('ALL');
   const [searchTerm, setSearchTerm] = useState('');
@@ -267,6 +278,11 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
     } finally {
       setLoading(false);
     }
+  };
+
+  const handleUpdateStatus = (ticket: Ticket) => {
+    setSelectedTicket(ticket);
+    setShowStatusModal(true);
   };
 
   const filteredTickets = tickets.filter(ticket => {
@@ -402,6 +418,9 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Fecha
                   </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Acciones
+                  </th>
                 </tr>
               </thead>
               <tbody className="bg-white divide-y divide-gray-200">
@@ -424,6 +443,15 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
                         day: 'numeric',
                       })}
                     </td>
+                    <td className="px-6 py-4">
+                      <button
+                        onClick={() => handleUpdateStatus(ticket)}
+                        className="inline-flex items-center gap-1 px-3 py-1 text-sm text-blue-600 hover:bg-blue-50 rounded-lg transition"
+                      >
+                        <Edit2 className="w-4 h-4" />
+                        Cambiar Estado
+                      </button>
+                    </td>
                   </tr>
                 ))}
               </tbody>
@@ -442,6 +470,22 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
           }}
         />
       )}
+
+      {/* Update Status Modal */}
+      {showStatusModal && selectedTicket && (
+        <UpdateStatusModal
+          ticket={selectedTicket}
+          onClose={() => {
+            setShowStatusModal(false);
+            setSelectedTicket(null);
+          }}
+          onSuccess={() => {
+            setShowStatusModal(false);
+            setSelectedTicket(null);
+            loadTickets();
+          }}
+        />
+      )}
     </div>
   );
 };
@@ -450,131 +494,241 @@ const TicketListPage: React.FC<{ onLogout: () => void }> = ({ onLogout }) => {
 const CreateTicketModal: React.FC<{ onClose: () => void; onSuccess: () => void }> = ({ onClose, onSuccess }) => {
   const [title, setTitle] = useState('');
   const [priority, setPriority] = useState<TicketPriority>('MEDIUM');
-  const [userId, setUserId] = useState('');
   const [areaId, setAreaId] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-    setError('');
-
-    try {
-      await api.createTicket({ title, priority, userId, areaId });
-      onSuccess();
-    } catch (err) {
-      setError('Error al crear el ticket');
-    } finally {
-      setLoading(false);
+    
+    if (!title.trim()) {
+      setError('El título es requerido');
+      return;
     }
-  };
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
-        <h2 className="text-2xl font-bold text-gray-900 mb-4">Nuevo Ticket</h2>
+    if (!areaId.trim()) {
+      setError('Debes seleccionar un área');
+      return;
+}
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
-            <input
-              type="text"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-              minLength={3}
-            />
-          </div>
+setLoading(true);
+setError('');
 
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">Prioridad</label>
-            <select
-              value={priority}
-              onChange={(e) => setPriority(e.target.value as TicketPriority)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-            >
-              <option value="LOW">Baja</option>
-              <option value="MEDIUM">Media</option>
-              <option value="HIGH">Alta</option>
-              <option value="URGENT">Urgente</option>
-            </select>
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">ID Usuario</label>
-            <input
-              type="text"
-              value={userId}
-              onChange={(e) => setUserId(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-              placeholder="UUID del usuario"
-            />
-          </div>
-
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-1">ID Área</label>
-            <input
-              type="text"
-              value={areaId}
-              onChange={(e) => setAreaId(e.target.value)}
-              className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
-              required
-              placeholder="UUID del área"
-            />
-          </div>
-
-          {error && (
-            <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
-              {error}
-            </div>
-          )}
-
-          <div className="flex gap-3">
-            <button
-              type="button"
-              onClick={onClose}
-              className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
-            >
-              Cancelar
-            </button>
-            <button
-              type="submit"
-              disabled={loading}
-              className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
-            >
-              {loading ? 'Creando...' : 'Crear Ticket'}
-            </button>
-          </div>
-        </form>
-      </div>
-    </div>
-  );
+try {
+  await api.createTicket({ title: title.trim(), priority, areaId: areaId.trim() });
+  onSuccess();
+} catch (err) {
+  setError('Error al crear el ticket. Verifica los datos.');
+} finally {
+  setLoading(false);
+}
 };
+return (
+<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+<div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+<h2 className="text-2xl font-bold text-gray-900 mb-4">Nuevo Ticket</h2>
+ <form onSubmit={handleSubmit} className="space-y-4">
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Título</label>
+        <input
+          type="text"
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          placeholder="Describe el problema..."
+          autoFocus
+        />
+      </div>
 
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Prioridad</label>
+        <select
+          value={priority}
+          onChange={(e) => setPriority(e.target.value as TicketPriority)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="LOW">Baja</option>
+          <option value="MEDIUM">Media</option>
+          <option value="HIGH">Alta</option>
+          <option value="URGENT">Urgente</option>
+        </select>
+      </div>
+
+      <div>
+        <label className="block text-sm font-medium text-gray-700 mb-1">Área</label>
+        <select
+          value={areaId}
+          onChange={(e) => setAreaId(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+        >
+          <option value="">Selecciona un área</option>
+          <option value="00000000-0000-0000-0000-000000000001">General</option>
+          <option value="00000000-0000-0000-0000-000000000002">Soporte Técnico</option>
+          <option value="00000000-0000-0000-0000-000000000003">Urgencias</option>
+        </select>
+      </div>
+
+      {error && (
+        <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+          {error}
+        </div>
+      )}
+
+      <div className="flex gap-3">
+        <button
+          type="button"
+          onClick={onClose}
+          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+        >
+          Cancelar
+        </button>
+        <button
+          type="submit"
+          disabled={loading}
+          className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+        >
+          {loading ? 'Creando...' : 'Crear Ticket'}
+        </button>
+      </div>
+    </form>
+  </div>
+</div>
+);
+};
+// ==================== UPDATE STATUS MODAL ====================
+const UpdateStatusModal: React.FC<{
+ticket: Ticket;
+onClose: () => void;
+onSuccess: () => void;
+}> = ({ ticket, onClose, onSuccess }) => {
+const [newStatus, setNewStatus] = useState<TicketStatus>(ticket.status);
+const [loading, setLoading] = useState(false);
+const [error, setError] = useState('');
+// Definir las transiciones válidas según la máquina de estados
+const getAvailableStatuses = (currentStatus: TicketStatus): TicketStatus[] => {
+const transitions: Record<TicketStatus, TicketStatus[]> = {
+OPEN: ['ASSIGNED', 'CANCELLED'],
+ASSIGNED: ['IN_PROGRESS', 'CANCELLED'],
+IN_PROGRESS: ['RESOLVED', 'CANCELLED'],
+RESOLVED: ['CLOSED'],
+CLOSED: [],
+CANCELLED: [],
+};
+return transitions[currentStatus] || [];
+};
+const availableStatuses = getAvailableStatuses(ticket.status);
+const handleSubmit = async (e: React.FormEvent) => {
+e.preventDefault();
+if (newStatus === ticket.status) {
+  setError('Selecciona un estado diferente');
+  return;
+}
+
+setLoading(true);
+setError('');
+
+try {
+  await api.updateTicketStatus(ticket.id, newStatus);
+  onSuccess();
+} catch (err) {
+  setError('Error al actualizar el estado del ticket.');
+} finally {
+  setLoading(false);
+}
+};
+const statusLabels: Record<TicketStatus, string> = {
+OPEN: 'Abierto',
+ASSIGNED: 'Asignado',
+IN_PROGRESS: 'En Progreso',
+RESOLVED: 'Resuelto',
+CLOSED: 'Cerrado',
+CANCELLED: 'Cancelado',
+};
+return (
+<div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+<div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+<h2 className="text-2xl font-bold text-gray-900 mb-4">Actualizar Estado</h2>
+    <div className="mb-4">
+      <p className="text-sm text-gray-600">Ticket: <span className="font-medium">{ticket.title}</span></p>
+      <p className="text-sm text-gray-600 mt-1">Estado actual: <StatusBadge status={ticket.status} /></p>
+    </div>
+
+    {availableStatuses.length === 0 ? (
+      <div className="p-4 bg-yellow-50 text-yellow-700 rounded-lg text-sm mb-4">
+        Este ticket no puede cambiar de estado. Los tickets {statusLabels[ticket.status]} son finales.
+      </div>
+    ) : (
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div>
+          <label className="block text-sm font-medium text-gray-700 mb-1">Nuevo Estado</label>
+          <select
+            value={newStatus}
+            onChange={(e) => setNewStatus(e.target.value as TicketStatus)}
+            className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500"
+          >
+            <option value={ticket.status}>Selecciona un estado</option>
+            {availableStatuses.map((status) => (
+              <option key={status} value={status}>
+                {statusLabels[status]}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        {error && (
+          <div className="p-3 bg-red-50 text-red-700 rounded-lg text-sm">
+            {error}
+          </div>
+        )}
+
+        <div className="flex gap-3">
+          <button
+            type="button"
+            onClick={onClose}
+            className="flex-1 px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            disabled={loading || newStatus === ticket.status}
+            className="flex-1 px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition disabled:opacity-50"
+          >
+            {loading ? 'Actualizando...' : 'Actualizar Estado'}
+          </button>
+        </div>
+      </form>
+    )}
+
+    {availableStatuses.length === 0 && (
+      <button
+        onClick={onClose}
+        className="w-full px-4 py-2 border border-gray-300 rounded-lg hover:bg-gray-50 transition"
+      >
+        Cerrar
+      </button>
+    )}
+  </div>
+</div>
+);
+};
 // ==================== MAIN APP ====================
 export default function App() {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    setIsAuthenticated(!!token);
-  }, []);
-
-  const handleLogin = () => {
-    setIsAuthenticated(true);
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem('token');
-    setIsAuthenticated(false);
-  };
-
-  return isAuthenticated ? (
-    <TicketListPage onLogout={handleLogout} />
-  ) : (
-    <LoginPage onLogin={handleLogin} />
-  );
+const [isAuthenticated, setIsAuthenticated] = useState(false);
+useEffect(() => {
+const token = localStorage.getItem('token');
+setIsAuthenticated(!!token);
+}, []);
+const handleLogin = () => {
+setIsAuthenticated(true);
+};
+const handleLogout = () => {
+localStorage.removeItem('token');
+setIsAuthenticated(false);
+};
+return isAuthenticated ? (
+<TicketListPage onLogout={handleLogout} />
+) : (
+<LoginPage onLogin={handleLogin} />
+);
 }
